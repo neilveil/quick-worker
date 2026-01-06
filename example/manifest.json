@@ -1,17 +1,17 @@
 {
-  "short_name": "AppSW",
-  "name": "AppSW Dummy Website",
-  "icons": [
-    {
-      "src": "/logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "orientation": "portrait",
-  "background_color": "#ffffff"
+    "short_name": "QuickSW",
+    "name": "QuickSW Dummy Website",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "orientation": "portrait",
+    "background_color": "#ffffff"
 }

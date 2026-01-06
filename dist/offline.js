@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = `<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -45,3 +47,4 @@
         </div>
     </body>
 </html>
+`;

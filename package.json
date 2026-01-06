@@ -1,31 +1,50 @@
 {
-  "name": "appsw",
-  "version": "3.2.0",
-  "description": "Application service worker generator",
-  "main": "dist/index.js",
-  "bin": "dist/bin.js",
-  "author": "neilveil",
-  "repository": "neilveil/appsw",
-  "scripts": {
-    "test:default": "ts-node src/bin.ts --appsw-root ./example",
-    "test:runtime": "ts-node src/bin.ts --appsw-root ./example --type runtime --uncompressed --debug",
-    "test:static": "ts-node src/bin.ts --appsw-root ./example --type static --uncompressed --debug",
-    "dist": "tsc",
-    "server": "nodemon --watch src/server.ts --ext ts --exec 'ts-node src/server.ts'"
-  },
-  "dependencies": {
-    "uglify-js": "^3.19.3",
-    "yargs": "^17.7.2"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.8.7",
-    "@types/uglify-js": "^3.17.5",
-    "@types/yargs": "^17.0.33",
-    "express-tools": "^2.1.5",
-    "nodemon": "^3.1.7",
-    "npm-run-all": "^4.1.5",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
-  }
+    "name": "quick-sw",
+    "version": "1.0.0",
+    "description": "Automatic browser file caching implementation with zero configuration.",
+    "main": "dist/index.js",
+    "bin": {
+        "quick-sw": "dist/bin.js"
+    },
+    "author": "neilveil",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/neilveil/quick-sw.git"
+    },
+    "keywords": [
+        "service-worker",
+        "pwa",
+        "cache",
+        "offline",
+        "progressive-web-app",
+        "sw",
+        "caching",
+        "zero-config"
+    ],
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "scripts": {
+        "test:default": "ts-node src/bin.ts --root ./example",
+        "test:runtime": "ts-node src/bin.ts --root ./example --type runtime --uncompressed --debug",
+        "test:static": "ts-node src/bin.ts --root ./example --type static --uncompressed --debug",
+        "dist": "tsc",
+        "server": "nodemon --watch src/server.ts --ext ts --exec 'ts-node src/server.ts'"
+    },
+    "dependencies": {
+        "uglify-js": "^3.19.3",
+        "yargs": "^17.7.2"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.0",
+        "@types/node": "^22.8.7",
+        "@types/uglify-js": "^3.17.5",
+        "@types/yargs": "^17.0.33",
+        "express-tools": "^2.1.5",
+        "nodemon": "^3.1.7",
+        "npm-run-all": "^4.1.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.6.3"
+    }
 }

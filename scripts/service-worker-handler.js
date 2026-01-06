@@ -1,33 +1,73 @@
 window.addEventListener('load', async () => {
-  try {
-    const apphashFile = await (await fetch('/apphash.json?' + Date.now())).text()
+    // Check if service workers are supported
+    if (!('serviceWorker' in navigator)) {
+        console.warn('Service workers are not supported in this browser')
+        return
+    }
 
-    const apphashJSON = JSON.parse(apphashFile)
+    try {
+        const response = await fetch('/apphash.json?' + Date.now())
+        if (!response.ok) {
+            console.error('Failed to fetch apphash.json:', response.status, response.statusText)
+            return
+        }
 
-    const newHash = apphashJSON.hash
-    const disabale = apphashJSON.disabale
-    const unregister = apphashJSON.unregister
+        const apphashJSON = await response.json()
 
-    if (disabale) return
-    if (unregister) return window.unregisterServiceWorker()
+        const newHash = apphashJSON.hash
+        const disable = apphashJSON.disable
+        const unregister = apphashJSON.unregister
 
-    const currentHash = window.localStorage.getItem('APPHASH')
-    if (currentHash && newHash !== currentHash) return window.unregisterServiceWorker()
+        if (disable) return
+        if (unregister) {
+            await window.unregisterServiceWorker()
+            return // unregisterServiceWorker will reload the page
+        }
 
-    window.dispatchEvent(new Event('APPSW_READY'))
+        // Validate hash exists
+        if (!newHash || typeof newHash !== 'string') {
+            console.error('Invalid apphash.json: hash is missing or invalid')
+            return
+        }
 
-    window.navigator.serviceWorker
-      .register('/service-worker.js')
-      .then(() => window.localStorage.setItem('APPHASH', newHash))
-  } catch (error) {
-    console.log('server-worker-handler-error', error)
-  }
+        const currentHash = window.localStorage.getItem('QSW_APPHASH')
+
+        // If hash changed, unregister old service worker first (will reload page)
+        if (currentHash && newHash !== currentHash) {
+            await window.unregisterServiceWorker()
+            return // unregisterServiceWorker will reload the page
+        }
+
+        // Register new service worker
+        await window.navigator.serviceWorker
+            .register('/service-worker.js')
+            .then(() => {
+                window.localStorage.setItem('QSW_APPHASH', newHash)
+                window.dispatchEvent(new Event('QSW_READY'))
+            })
+            .catch(error => {
+                console.error('Failed to register service worker:', error)
+            })
+    } catch (error) {
+        console.error('service-worker-handler-error', error)
+    }
 })
 
 window.unregisterServiceWorker = async () => {
-  await caches.keys().then(keys => Promise.all(keys.map(key => caches.delete(key))))
-  const registrations = await window.navigator.serviceWorker.getRegistrations()
-  for (const registration of registrations) await registration.unregister()
-  window.localStorage.removeItem('APPHASH')
-  window.location.reload()
+    // Only delete our own caches, not all caches
+    // Cache names are prefixed with 'QSW-STATIC-' and 'QSW-RUNTIME-'
+    await caches.keys().then(keys => {
+        return Promise.all(
+            keys
+                .filter(key => key.startsWith('QSW-STATIC-') || key.startsWith('QSW-RUNTIME-'))
+                .map(key => caches.delete(key))
+        )
+    })
+
+    const registrations = await window.navigator.serviceWorker.getRegistrations()
+    for (const registration of registrations) {
+        await registration.unregister()
+    }
+    window.localStorage.removeItem('QSW_APPHASH')
+    window.location.reload()
 }

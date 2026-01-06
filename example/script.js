@@ -1,3 +1,3 @@
-window.addEventListener('APPSW_READY', () => {
-  console.log('AppSW ready!')
+window.addEventListener('QSW_READY', () => {
+    console.log('QuickSW ready!')
 })
