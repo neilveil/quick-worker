@@ -1,3 +1,3 @@
-window.addEventListener('QSW_READY', () => {
-    console.log('QuickSW ready!')
+window.addEventListener('QW_READY', () => {
+    console.log('Quick Worker ready!')
 })

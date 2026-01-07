@@ -1,16 +1,16 @@
 {
-    "name": "quick-sw",
+    "name": "quick-worker",
     "version": "1.0.0",
     "description": "Automatic browser file caching implementation with zero configuration.",
     "main": "dist/index.js",
     "bin": {
-        "quick-sw": "dist/bin.js"
+        "quick-worker": "dist/bin.js"
     },
     "author": "neilveil",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/neilveil/quick-sw.git"
+        "url": "git+https://github.com/neilveil/quick-worker.git"
     },
     "keywords": [
         "service-worker",

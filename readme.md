@@ -1,4 +1,4 @@
-# QuickSW
+# Quick Worker
 
 Automatic browser file caching implementation for your website/apps with zero configuration.
 
@@ -13,19 +13,19 @@ Automatic browser file caching implementation for your website/apps with zero co
 ## Installation
 
 ```
-npm install quick-sw
+npm install quick-worker
 ```
 
 ### Setup
 
 ### Setup build command
 
-Append `quick-sw` command after the default build command.
+Append `quick-worker` command after the default build command.
 
 ```json
 {
     "scripts": {
-        "build": "my-build-command && quick-sw"
+        "build": "my-build-command && quick-worker"
     }
 }
 ```
@@ -42,7 +42,7 @@ Configuration
 Example
 
 ```sh
-quick-sw --root ./example --type runtime --uncompressed --debug
+quick-worker --root ./example --type runtime --uncompressed --debug
 ```
 
 ### Add handler script in `index.html`
@@ -62,8 +62,8 @@ quick-sw --root ./example --type runtime --uncompressed --debug
 When the application updates its cache, a page reload will occur to use the latest files. It's recommended for apps to wait for the ready event.
 
 ```js
-window.addEventListener('QSW_READY', () => {
-    console.log('Quick SW ready!')
+window.addEventListener('QW_READY', () => {
+    console.log('Quick Worker ready!')
 })
 ```
 
@@ -78,11 +78,11 @@ window.addEventListener('QSW_READY', () => {
 
 Add your custom service worker code in `service-worker-append.js` file.
 
-## Migration from QuickSw
+## Migration from QuickWorker
 
-To stop using `quick-sw`, first remove `quick-sw` command from build script.
+To stop using `quick-worker`, first remove `quick-worker` command from build script.
 
-To temporarily disable `quick-sw` service worker, update `apphash.json` as:
+To temporarily disable `quick-worker` service worker, update `apphash.json` as:
 
 ```json
 { "disable": true }
@@ -104,5 +104,5 @@ To completely remove service worker from your application, update `apphash.json`
 ## Note
 
 -   Avoid using `Cache-Control` header from your server to cache files.
--   When updating or removing QuickSW, ensure `apphash.json` is updated accordingly; refer to the migration docs above.
--   Waiting for `QSW_READY` event is recommended for smooth user experience.
+-   When updating or removing QuickWorker, ensure `apphash.json` is updated accordingly; refer to the migration docs above.
+-   Waiting for `QW_READY` event is recommended for smooth user experience.

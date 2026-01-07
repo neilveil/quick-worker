@@ -3,8 +3,8 @@ const isStatic = false
 
 const CACHE_VERSION = 'v1'
 const CACHE_NAMES = {
-    STATIC: `QSW-STATIC-${CACHE_VERSION}`,
-    RUNTIME: `QSW-RUNTIME-${CACHE_VERSION}`
+    STATIC: `QW-STATIC-${CACHE_VERSION}`,
+    RUNTIME: `QW-RUNTIME-${CACHE_VERSION}`
 }
 
 const offlineHTML = '/offline.html'
@@ -95,9 +95,9 @@ self.addEventListener('activate', event =>
             const deletePromises = cacheKeys
                 .filter(key => {
                     // Delete caches that match our pattern but are not the current version
-                    // Cache names are prefixed with 'QSW-STATIC-' and 'QSW-RUNTIME-'
+                    // Cache names are prefixed with 'QW-STATIC-' and 'QW-RUNTIME-'
                     const isOurCache =
-                        (key.startsWith('QSW-STATIC-') || key.startsWith('QSW-RUNTIME-')) &&
+                        (key.startsWith('QW-STATIC-') || key.startsWith('QW-RUNTIME-')) &&
                         !currentCacheNames.includes(key)
                     return isOurCache
                 })
@@ -360,7 +360,7 @@ self.addEventListener('fetch', event =>
     )
 )
 
-const print = (...content) => debug && console.log('QSW ::', ...content)
+const print = (...content) => debug && console.log('QW ::', ...content)
 
 // Helper function to check if request is from same origin
 const isSameOrigin = url => {

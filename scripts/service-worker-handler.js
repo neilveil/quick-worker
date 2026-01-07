@@ -30,7 +30,7 @@ window.addEventListener('load', async () => {
             return
         }
 
-        const currentHash = window.localStorage.getItem('QSW_APPHASH')
+        const currentHash = window.localStorage.getItem('QW_APPHASH')
 
         // If hash changed, unregister old service worker first (will reload page)
         if (currentHash && newHash !== currentHash) {
@@ -42,8 +42,8 @@ window.addEventListener('load', async () => {
         await window.navigator.serviceWorker
             .register('/service-worker.js')
             .then(() => {
-                window.localStorage.setItem('QSW_APPHASH', newHash)
-                window.dispatchEvent(new Event('QSW_READY'))
+                window.localStorage.setItem('QW_APPHASH', newHash)
+                window.dispatchEvent(new Event('QW_READY'))
             })
             .catch(error => {
                 console.error('Failed to register service worker:', error)
@@ -55,11 +55,11 @@ window.addEventListener('load', async () => {
 
 window.unregisterServiceWorker = async () => {
     // Only delete our own caches, not all caches
-    // Cache names are prefixed with 'QSW-STATIC-' and 'QSW-RUNTIME-'
+    // Cache names are prefixed with 'QW-STATIC-' and 'QW-RUNTIME-'
     await caches.keys().then(keys => {
         return Promise.all(
             keys
-                .filter(key => key.startsWith('QSW-STATIC-') || key.startsWith('QSW-RUNTIME-'))
+                .filter(key => key.startsWith('QW-STATIC-') || key.startsWith('QW-RUNTIME-'))
                 .map(key => caches.delete(key))
         )
     })
@@ -68,6 +68,6 @@ window.unregisterServiceWorker = async () => {
     for (const registration of registrations) {
         await registration.unregister()
     }
-    window.localStorage.removeItem('QSW_APPHASH')
+    window.localStorage.removeItem('QW_APPHASH')
     window.location.reload()
 }
